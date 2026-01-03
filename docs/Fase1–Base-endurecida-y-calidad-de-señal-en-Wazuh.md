@@ -52,7 +52,6 @@ Fragmento relevante de **File Integrity Monitoring / Registry**:
 </syscheck>
 ```
 
-(En el repo puedes incluir el `ossec.conf` completo en `configs/agents/windows10-lab-ossec.conf`)
 
 ## 3.2 Reglas locales MITRE (local_rules.xml)
 
