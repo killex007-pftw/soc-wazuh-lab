@@ -1,0 +1,124 @@
+<!-- Local rules -->
+
+<group name="local,powershell,windows,">
+  <rule id="100100" level="10">
+    <!-- Regla base de Sysmon: Event 1 - PowerShell -->
+    <if_sid>61603</if_sid>
+    <!-- Buscamos ExecutionPolicy Bypass en la línea de comandos -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)-ExecutionPolicy\s*Bypass</field>
+    <description>PowerShell ejecutado con ExecutionPolicy Bypass</description>
+    <mitre><id>T1059.001</id></mitre>
+    <group>local,powershell,windows,execution,mitre,</group>
+  </rule>
+</group>
+
+<!-- Servicios instalados (ATT&CK T1543.003) -->
+<group name="windows,services,attack.t1543.003">
+  <rule id="100110" level="10">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID" type="pcre2">^7045$</field>
+    <description>Windows service installed (System 7045) (ATT&amp;CK T1543.003)</description>
+    <mitre><id>T1543.003</id></mitre>
+  </rule>
+  <rule id="100111" level="10">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID" type="pcre2">^4697$</field>
+    <description>Windows service installed (Security 4697) (ATT&amp;CK T1543.003)</description>
+    <mitre><id>T1543.003</id></mitre>
+  </rule>
+</group>
+
+<!-- Persistencia Run/RunOnce (ATT&CK T1547.001) usando eventos de Sysmon (rule 92302) -->
+<group name="windows,registry,persistence,attack.t1547.001">
+
+  <!-- Cualquier Run/RunOnce modificado -->
+  <rule id="100120" level="8">
+    <if_sid>92302</if_sid>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersio>
+    <description>Registry Run key modified (ATT&amp;CK T1547.001)</description>
+    <mitre><id>T1547.001</id></mitre>
+    <group>persistence,mitre,</group>
+  </rule>
+
+  <!-- Para separar HKCU (Opcional) -->
+  <rule id="100121" level="8">
+    <if_sid>92302</if_sid>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows>
+    <description>HKCU Run modified (ATT&amp;CK T1547.001)</description>
+    <mitre><id>T1547.001</id></mitre>
+    <group>persistence,mitre,</group>
+  </rule>
+
+</group>
+
+<group name="local,windows,discovery,attack.t1082">
+
+  <!-- T1082 sobre eventos Security 4688 -->
+  <rule id="100130" level="7">
+    <!-- Encadenamos con la regla genérica de proceso creado -->
+    <if_sid>67027</if_sid>
+
+    <!-- Comandos típicos de System Information Discovery -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\b(systeminfo|whoami(\s+/all)?|ipconfig(\s+/all)?)\b</>
+    <description>System information discovery via built-in commands (ATT&amp;CK T1082)</description>
+    <mitre><id>T1082</id></mitre>
+    <group>discovery,mitre,</group>
+  </rule>
+
+</group>
+
+<group name="local,windows,discovery,attack.t1016">
+
+  <!-- T1016 sobre eventos Security 4688 -->
+  <rule id="100140" level="6">
+    <if_sid>67027</if_sid>
+    <!-- Comandos típicos de descubrimiento de red -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\b(arp\s+-a|netstat(\s+-ano)?|route\s+print|ipconfig(\>
+    <description>System network configuration discovery via built-in commands (ATT&amp;CK T1016)</description>
+    <mitre><id>T1016</id></mitre>
+    <group>discovery,mitre,</group>
+  </rule>
+
+</group>
+
+<group name="local,windows,persistence,attack,">
+
+  <!-- T1053.005 - Scheduled Task creation via schtasks.exe -->
+  <rule id="100150" level="10">
+    <if_sid>67027</if_sid>
+
+    <!-- Proceso schtasks.exe (cualquier ruta) -->
+    <field name="win.eventdata.newProcessName" type="pcre2">(?i)schtasks\.exe$</field>
+
+    <!-- Línea de comando con /create -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)/create</field>
+
+    <description>Scheduled task creation via schtasks.exe (ATT&amp;CK T1053.005)</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,windows,discovery,attack.t1087">
+
+  <!-- T1087 - Account Discovery vía "net user" en eventos Security 4688 -->
+  <rule id="100141" level="7">
+    <!-- Regla base: proceso creado (Security 4688) -->
+    <if_sid>67027</if_sid>
+
+    <!-- Ejecutable net.exe o net1.exe (System32, SysWOW64, etc.) -->
+    <field name="win.eventdata.newProcessName" type="pcre2">(?i)net(1)?\.exe$</field>
+
+    <!-- Línea de comando que contenga 'net user' -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\bnet\s+user\b</field>
+
+    <description>Account discovery via "net user" (ATT&amp;CK T1087)</description>
+    <mitre>
+      <id>T1087</id>
+    </mitre>
+    <group>discovery,mitre,</group>
+  </rule>
+
+</group>
