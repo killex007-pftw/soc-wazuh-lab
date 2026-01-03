@@ -21,8 +21,6 @@ Establecer una base segura para el laboratorio SOC con Wazuh, pfSense y un endpo
     - EventChannel: Application, Security, System.
     - EventChannel: `Microsoft-Windows-Sysmon/Operational`.
 
-> *(Aquí puedes insertar una imagen del diagrama de red, por ejemplo  
-> `![Topología del laboratorio](../assets/screenshots/fase1-topologia-lab.png)`)*
 
 ---
 
