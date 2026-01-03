@@ -111,4 +111,4 @@ El uso de aliases hace más fácil modificar puertos/IPS de Wazuh sin tocar toda
   - El resto del tráfico se controla por interfaz, imitando una red corporativa segmentada.
 
 
-> [!NOTA] **NOTA IMPORTANTE**: Lo desarrollado en todo este apartado pertenece a la configuración base de pfsense. En fases posteriores, documentadas respectivamente en el apartado [[docs]], se añadieron reglas a pfsense para acoplar a los objetivos desplegados en cada escenario.
+> [!**NOTA IMPORTANTE**]: Lo desarrollado en todo este apartado pertenece a la configuración base de pfsense. En fases posteriores, documentadas respectivamente en el apartado [[docs]], se añadieron reglas a pfsense para acoplar a los objetivos desplegados en cada escenario.
