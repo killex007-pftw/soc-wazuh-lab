@@ -86,8 +86,6 @@ La interfaz OPT1 tiene reglas específicas que permiten desde `OPT1 subnets` hac
 
 ## 4. Diagrama de red (descripción)
 
-Un posible diagrama lógico (que luego puedes dibujar en draw.io / Visio) sería:
-
 - **Capa externa**
   - `Internet / Red VMware` → `pfSense (WAN 192.168.184.128)`
 
