@@ -9,7 +9,7 @@ y validar qué tan bien los detecta Wazuh (reglas oficiales + reglas locales).
 ## Arquitectura del laboratorio
 
 - **Firewall / router:** pfSense
-  - Segmentación en redes OPT1 (Windows), OPT2 (Wazuh), OPT3 (Kali) y LAN.
+  - Segmentación en redes LAN (Red de servidores, incluidos Wazuh), OPT1 (Windows), OPT2 (Segmento Reservado), OPT3 (Kali).
 - **SIEM / XDR:** Wazuh Server + Dashboard.
 - **Endpoint Windows 11:** `DESKTOP-IS5MQHK`
   - Agente Wazuh.
