@@ -16,7 +16,7 @@
   - IP: `192.168.40.x` (dentro del rango OPT3)
 - **Host físico**:
   - PC personal con VMware, que aloja pfSense, Wazuh, Windows 11 y Kali.
-  - Desde este entorno se accede al WebGUI de pfSense y al dashboard de Wazuh.
+  - Desde el host de Windows 11, se accede al WebGUI de pfSense y al dashboard de Wazuh.
 
 ---
 
@@ -73,7 +73,7 @@ La interfaz OPT1 tiene reglas específicas que permiten desde `OPT1 subnets` hac
 
 - Red: `192.168.40.0/24`.
 - pfSense tiene una regla muy restrictiva en OPT3: solo permite ICMP desde `OPT3 subnets` hacia el propio firewall.
-- Actualmente no hay acceso directo desde Kali a Wazuh ni a LAN, lo que permite simular un atacante externo controlado en Fase 2 sin comprometer la gestión.
+- En este despliegue incial, no hay acceso directo desde Kali a Wazuh ni a LAN, lo que permite simular un atacante externo controlado en Fase 2 sin comprometer la gestión.
 
 ### 3.4 WAN
 
